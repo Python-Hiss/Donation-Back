@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Group
 from rest_framework import serializers
 from django.contrib.auth import get_user_model # If used custom user model
 from .models import customUser
@@ -14,6 +15,9 @@ class UserSerializer(serializers.ModelSerializer):
             username=validated_data['username'],
             password=validated_data['password'],
             website = validated_data['website'],
+            image = validated_data['image'],
+            group = validated_data['group'],
+            email = validated_data['email'],
         )
 
         return user
@@ -21,7 +25,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = customUser
         # Tuple of serialized model fields (see link [2])
-        fields = ( "id", "username", "password", "website", "image" )
+        fields = ( "id", "username", "password", "website", "image",'group','email' )
         
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
