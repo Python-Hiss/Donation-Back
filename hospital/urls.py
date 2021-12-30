@@ -1,8 +1,6 @@
 # accounts/urls.py
 from django.urls import path
-
 from .views import CreateUserView, HospitalDetail
-
 from .views import CustomObtainAuthToken
 
 urlpatterns = [
