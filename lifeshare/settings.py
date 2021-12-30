@@ -52,10 +52,12 @@ INSTALLED_APPS = [
     # 3rd party
     "whitenoise.runserver_nostatic",
     "rest_framework",
+    'rest_framework_simplejwt',
     "corsheaders",
     ## local
     'blood_donating',
-    'accounts'
+    'accounts',
+    'hospital'
 ]
 
 MIDDLEWARE = [
@@ -75,7 +77,7 @@ ROOT_URLCONF = 'lifeshare.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR/'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
