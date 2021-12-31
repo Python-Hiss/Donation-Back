@@ -14,3 +14,6 @@ class Account(User):
     location = models.CharField(max_length=50,blank=True,null=True)
     donate = models.BooleanField(default=False)
 
+    def __str__(self) :
+        return self.username
+
