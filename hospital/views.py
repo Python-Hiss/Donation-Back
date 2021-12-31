@@ -5,7 +5,7 @@ from .models import customUser
 from .serializers import UserSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import MyTokenObtainPairSerializer
-
+from django.shortcuts import get_object_or_404
 
 
 
@@ -25,3 +25,6 @@ class HospitalDetail(RetrieveAPIView):
     permission_classes = [
         permissions.AllowAny # Or anon users can't register
     ]
+    def get_object(self):
+        UserName= self.kwargs.get("username")
+        return get_object_or_404(customUser, username=UserName)

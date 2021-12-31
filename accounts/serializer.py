@@ -1,6 +1,8 @@
 from django.db.models import fields
 from rest_framework import serializers
 from .models import Account
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
 class AddSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
@@ -31,4 +33,17 @@ class AddSerializer(serializers.ModelSerializer):
         'email','password','age','blood_type','phone_number','location',
         'chronic_diseases','data','donate','group','image'
         )
-        
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        refresh = self.get_token(self.user)
+        data['refresh'] = str(refresh)
+        data['access'] = str(refresh.access_token)
+
+        # Add extra responses here
+        data['id'] = self.user.id
+        data['username'] = self.user.username
+
+        return data
+

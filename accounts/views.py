@@ -1,11 +1,15 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions
-from .serializer import AddSerializer
+from .serializer import AddSerializer,MyTokenObtainPairSerializer
 from .models import Account
 from rest_framework import permissions
 from django.shortcuts import get_object_or_404
+from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import User
 # Create your views here.
+
+class CustomObtainAuthToken(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
 
 class AddListView(generics.CreateAPIView):
     serializer_class = AddSerializer
