@@ -11,25 +11,25 @@ class AddSerializer(serializers.ModelSerializer):
         user = Account.objects.create_user(
             username=validated_data['username'],
             password=validated_data['password'],
-            # age=validated_data['age'],
+            age=validated_data['age'],
             # group = validated_data['group'],
             # blood_type = validated_data['blood_type'],
             # chronic_diseases = validated_data['chronic_diseases'],
             # data = validated_data['data'],
             # phone_number = validated_data['phone_number'],
-            # first_name = validated_data['first_name'],
-            # last_name = validated_data['last_name'],
-            # email = validated_data['email'],
+            first_name = validated_data['first_name'],
+            last_name = validated_data['last_name'],
+            email = validated_data['email'],
             # location = validated_data['location'],
             # donate = validated_data['donate'],
-            # image = validated_data['image']
+            image = validated_data['image']
         )
 
         return user
 
     class Meta:
         model = Account
-        fields = ('username','password'
+        fields = ('username','password','first_name','last_name','email','age','image'
         )
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
