@@ -26,4 +26,4 @@ class DetailAddView(generics.RetrieveUpdateDestroyAPIView):
 class ListView(generics.ListAPIView):
     serializer_class = AddSerializer
     queryset = Account.objects.all()
-    # permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.AllowAny]
