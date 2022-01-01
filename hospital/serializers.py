@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model # If used custom user model
 from .models import customUser
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+
 class UserSerializer(serializers.ModelSerializer):
 
     password = serializers.CharField(write_only=True)
@@ -40,3 +41,5 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['id'] = self.user.id
         data['username'] = self.user.username
         return data
+
+

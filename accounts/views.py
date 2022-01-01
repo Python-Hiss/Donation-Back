@@ -6,7 +6,9 @@ from rest_framework import permissions
 from django.shortcuts import get_object_or_404
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.views.decorators.csrf import csrf_exempt
-
+from rest_framework.renderers import JSONRenderer
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
 # Create your views here.
@@ -32,3 +34,16 @@ class ListView(generics.ListAPIView):
     serializer_class = AddSerializer
     queryset = Account.objects.all()
     permission_classes = [permissions.AllowAny]
+
+class countview(APIView):
+    """
+    A view that returns the count of active users.
+    """
+    permission_classes = [permissions.AllowAny]
+    renderer_classes = [JSONRenderer]
+
+    def get(self, request, format=None):
+        print(request.data)
+        user_count = Account.objects.count()
+        content = {'user_count': user_count}
+        return Response(content)
