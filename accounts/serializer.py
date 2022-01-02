@@ -1,6 +1,6 @@
 from django.db.models import fields
 from rest_framework import serializers
-from .models import Account
+from .models import UserAccount
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class AddSerializer(serializers.ModelSerializer):
@@ -8,7 +8,7 @@ class AddSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
 
-        user = Account.objects.create_user(
+        user = UserAccount.objects.create_user(
             username=validated_data['username'],
             password=validated_data['password'],
             age=validated_data['age'],
@@ -27,14 +27,14 @@ class AddSerializer(serializers.ModelSerializer):
         return user
 
     class Meta:
-        model = Account
+        model = UserAccount
         fields = ('username','password','first_name','last_name','email','age','image'
         )
 from django.contrib.auth.models import Group
 class EditSerializer(serializers.ModelSerializer):
      def create(self, validated_data):
 
-        user = Account.objects.create_user(
+        user = UserAccount.objects.create_user(
             username=validated_data['username'],
             age=validated_data['age'],
             blood_type = validated_data['blood_type'],
@@ -51,7 +51,7 @@ class EditSerializer(serializers.ModelSerializer):
 
         return user
      class Meta:
-        model = Account
+        model = UserAccount
         fields = ('username','first_name','last_name','email','age','image','donate','location','phone_number'
         ,'date','chronic_diseases','blood_type'
         )
