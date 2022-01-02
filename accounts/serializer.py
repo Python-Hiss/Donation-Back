@@ -30,6 +30,7 @@ class AddSerializer(serializers.ModelSerializer):
         model = Account
         fields = ('username','password','first_name','last_name','email','age','image'
         )
+from django.contrib.auth.models import Group
 class EditSerializer(serializers.ModelSerializer):
      def create(self, validated_data):
 
@@ -62,10 +63,9 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['refresh'] = str(refresh)
         data['access'] = str(refresh.access_token)
 
-        # Add extra responses here
         data['id'] = self.user.id
         data['username'] = self.user.username
-        data['group'] = self.user.group
+        data['group'] = bool(self.user.first_name)
 
         return data
 
