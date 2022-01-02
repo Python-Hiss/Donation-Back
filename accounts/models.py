@@ -13,4 +13,3 @@ class Account(User):
     group = models.ForeignKey(Group, related_name="boes", on_delete=models.CASCADE,default=2)
     location = models.CharField(max_length=50,blank=True,null=True)
     donate = models.BooleanField(default=False)
-

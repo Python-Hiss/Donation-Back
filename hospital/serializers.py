@@ -1,6 +1,8 @@
 from django.contrib.auth.models import Group
 from rest_framework import serializers
-from django.contrib.auth import get_user_model # If used custom user model
+from django.contrib.auth import get_user_model
+
+from accounts.models import Account # If used custom user model
 from .models import customUser
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
@@ -29,17 +31,3 @@ class UserSerializer(serializers.ModelSerializer):
         # Tuple of serialized model fields (see link [2])
         fields = ( "id", "name","username", "password", "website", "image",'email' )
         
-
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    def validate(self, attrs):
-        data = super().validate(attrs)
-        refresh = self.get_token(self.user)
-        data['refresh'] = str(refresh)
-        data['access'] = str(refresh.access_token)
-
-        # Add extra responses here
-        data['id'] = self.user.id
-        data['username'] = self.user.username
-        return data
-
-

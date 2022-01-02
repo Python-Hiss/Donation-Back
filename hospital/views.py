@@ -4,14 +4,12 @@ from django.contrib.auth import get_user_model # If used custom user model
 from .models import customUser
 from .serializers import UserSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .serializers import MyTokenObtainPairSerializer
 from django.shortcuts import get_object_or_404
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-class CustomObtainAuthToken(TokenObtainPairView):
-    serializer_class = MyTokenObtainPairSerializer
+
 
 class CreateUserView(CreateAPIView):
     """

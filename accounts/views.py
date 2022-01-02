@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions
-from .serializer import AddSerializer,MyTokenObtainPairSerializer
+from .serializer import AddSerializer,MyTokenObtainPairSerializer,EditSerializer
 from .models import Account
 from rest_framework import permissions
 from django.shortcuts import get_object_or_404
 from rest_framework_simplejwt.views import TokenObtainPairView
-from django.views.decorators.csrf import csrf_exempt
+
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -24,8 +24,9 @@ class AddListView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
 class DetailAddView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = AddSerializer
+    serializer_class = EditSerializer
     queryset = Account.objects.all()
+    permission_classes = [permissions.AllowAny]
     
     def get_object(self):
         UserName= self.kwargs.get("username")
