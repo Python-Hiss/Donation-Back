@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions
-from .serializer import AddSerializer,MyTokenObtainPairSerializer,EditSerializer
-from .models import UserAccount
+from .serializer import AddDonaterSerializer,MyTokenObtainPairSerializer,EditDonaterSerializer,EditHospitalUser,AddHospitalUser
+from .models import CustomUser
 from rest_framework import permissions
 from django.shortcuts import get_object_or_404
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -19,22 +19,22 @@ class CustomObtainAuthToken(TokenObtainPairView):
 
 
 class AddListView(generics.CreateAPIView):
-    serializer_class = AddSerializer
-    queryset = UserAccount.objects.all()
+    serializer_class = AddDonaterSerializer
+    queryset = CustomUser.objects.all()
     permission_classes = [permissions.AllowAny]
 
 class DetailAddView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = EditSerializer
-    queryset = UserAccount.objects.all()
-    permission_classes = [permissions.AllowAny]
+    serializer_class = EditDonaterSerializer
+    queryset = CustomUser.objects.all()
+   
     
-    def get_object(self):
-        UserName= self.kwargs.get("username")
-        return get_object_or_404(UserAccount, username=UserName)
+    # def get_object(self):
+    #     UserName= self.kwargs.get("username")
+    #     return get_object_or_404(CustomUser, username=UserName)
 class ListView(generics.ListAPIView):
-    serializer_class = AddSerializer
-    queryset = UserAccount.objects.all()
-    permission_classes = [permissions.AllowAny]
+    serializer_class = EditDonaterSerializer
+    queryset = CustomUser.objects.all()
+    
 
 class countview(APIView):
     """
@@ -45,6 +45,47 @@ class countview(APIView):
 
     def get(self, request, format=None):
         print(request.data)
-        user_count = UserAccount.objects.count()
+        user_count = CustomUser.objects.filter(roles="Donater").count()
+        content = {'user_count': user_count}
+        return Response(content)
+
+
+## hospital 
+
+
+class CreateHospitalUserView(generics.CreateAPIView):
+    """
+    A view that signup hospital.
+    """
+    model = CustomUser
+    permission_classes = [
+        permissions.AllowAny # Or anon users can't register
+    ]
+    serializer_class = AddHospitalUser
+
+class HospitalDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    A view that returns the detail of hospital 
+    """
+    queryset = CustomUser.objects.all()
+    serializer_class = EditHospitalUser
+    # def get_object(self):
+    #     UserName= self.kwargs.get("username")
+    #     return get_object_or_404(CustomUser, username=UserName)
+
+class HospitalListView(generics.ListAPIView):
+    serializer_class = EditHospitalUser
+    queryset = CustomUser.objects.all()
+
+class counthospitalview(APIView):
+    """
+    A view that returns the count of active users.
+    """
+    permission_classes = [permissions.AllowAny]
+    renderer_classes = [JSONRenderer]
+
+    def get(self, request, format=None):
+        print(request.data)
+        user_count = CustomUser.objects.filter(roles="hospital").count()
         content = {'user_count': user_count}
         return Response(content)
