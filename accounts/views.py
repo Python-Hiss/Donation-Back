@@ -33,7 +33,7 @@ class DetailAddView(generics.RetrieveUpdateDestroyAPIView):
     #     return get_object_or_404(CustomUser, username=UserName)
 class ListView(generics.ListAPIView):
     serializer_class = EditDonaterSerializer
-    queryset = CustomUser.objects.all()
+    queryset = CustomUser.objects.filter(roles="Donater")
     
 
 class countview(APIView):
@@ -75,7 +75,7 @@ class HospitalDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class HospitalListView(generics.ListAPIView):
     serializer_class = EditHospitalUser
-    queryset = CustomUser.objects.all()
+    queryset = CustomUser.objects.filter(roles="hospital")
 
 class counthospitalview(APIView):
     """

@@ -21,7 +21,7 @@ class AddDonaterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('username','password','first_name','email','blood_type',"phone_number",'roles'
+        fields = ('username','password','first_name','email','blood_type','roles'
         )
 
 class EditDonaterSerializer(serializers.ModelSerializer):
