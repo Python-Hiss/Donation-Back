@@ -1,6 +1,6 @@
 # from django.shortcuts import render
 from rest_framework import generics, permissions
-from .serializer import AddDonerSerializer,MyTokenObtainPairSerializer,EditDonerSerializer,EditHospitalUser,AddHospitalUser,AddPatientSerializer,EditPatientSerializer
+from .serializer import AddDonerSerializer,MyTokenObtainPairSerializer,EditDonerSerializer,EditHospitalUser,AddHospitalUser,AddPatientSerializer,EditPatientSerializer,BloodSerializer
 from .models import Patient,Hospital,Doner
 from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -118,25 +118,47 @@ class countPatientview(APIView):
 
 
 
-# ## filter Blood
-# class Blood_O_List(generics.ListAPIView):
-#     typeBlood=['O+','O-']
-#     serializer_class = BloodSerializer
-#     queryset = CustomUser.objects.filter(blood_type__in=typeBlood)
-#     permission_classes = [permissions.AllowAny]
+## filter Blood
+class Blood_O_Nigative_List(generics.ListAPIView):
+    # typeBlood=['O+','O-']
+    serializer_class = BloodSerializer
+    queryset = Doner.objects.filter(blood_type__blood_type = 'O-')
+    permission_classes = [permissions.AllowAny]
+class Blood_O_Positive_List(generics.ListAPIView):
+    typeBlood=['O+','O-']
+    serializer_class = BloodSerializer
+    queryset = Doner.objects.filter(blood_type__blood_type__in = typeBlood)
+    permission_classes = [permissions.AllowAny]
 
-# class Blood_A_List(generics.ListAPIView):
-#     typeBlood=['O+','O-','A+','A-']
-#     serializer_class = BloodSerializer
-#     queryset = CustomUser.objects.filter(blood_type__in=typeBlood)
-#     permission_classes = [permissions.AllowAny]
-# class Blood_B_List(generics.ListAPIView):
-#     typeBlood=['O+','O-','B+','B-']
-#     serializer_class = BloodSerializer
-#     queryset = CustomUser.objects.filter(blood_type__in=typeBlood)
-#     permission_classes = [permissions.AllowAny]
-# class Blood_AB_List(generics.ListAPIView):
-#     typeBlood=['O+','O-','B+','B-','A+','A-','AB+','AB-']
-#     serializer_class = BloodSerializer
-#     queryset = CustomUser.objects.filter(blood_type__in=typeBlood)
-#     permission_classes = [permissions.AllowAny]
+class Blood_A_Nigative_List(generics.ListAPIView):
+    typeBlood=['O-','A-']
+    serializer_class = BloodSerializer
+    queryset = Doner.objects.filter(blood_type__blood_type__in=typeBlood)
+    permission_classes = [permissions.AllowAny]
+class Blood_A_Positive_List(generics.ListAPIView):
+    typeBlood=['O+','O-','A+','A-']
+    serializer_class = BloodSerializer
+    queryset = Doner.objects.filter(blood_type__blood_type__in=typeBlood)
+    permission_classes = [permissions.AllowAny]
+class Blood_B_Nigative_List(generics.ListAPIView):
+    typeBlood=['O-','B-']
+    serializer_class = BloodSerializer
+    queryset = Doner.objects.filter(blood_type__blood_type__in=typeBlood)
+    permission_classes = [permissions.AllowAny]
+class Blood_B_Positive_List(generics.ListAPIView):
+    typeBlood=['O+','O-','B+','B-']
+    serializer_class = BloodSerializer
+    queryset = Doner.objects.filter(blood_type__blood_type__in=typeBlood)
+    permission_classes = [permissions.AllowAny]
+
+
+class Blood_AB_Positive_List(generics.ListAPIView):
+    typeBlood=['O+','O-','B+','B-','A+','A-','AB+','AB-']
+    serializer_class = BloodSerializer
+    queryset = Doner.objects.filter(blood_type__blood_type__in=typeBlood)
+    permission_classes = [permissions.AllowAny]
+class Blood_AB_Nigative_List(generics.ListAPIView):
+    typeBlood=['O-','B-','A-','AB-']
+    serializer_class = BloodSerializer
+    queryset = Doner.objects.filter(blood_type__blood_type__in=typeBlood)
+    permission_classes = [permissions.AllowAny]

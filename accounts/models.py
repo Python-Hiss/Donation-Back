@@ -12,19 +12,19 @@ class CustomUser(AbstractUser):
 
     )
     phone_number = models.CharField(max_length=20,blank=True, help_text='Contact phone number')
-    address = models.ForeignKey(Address,on_delete=models.CASCADE,default=1)
+    address = models.ForeignKey(Address,on_delete=models.CASCADE,default=1,blank=True,null=True,related_name='tracks')
     image = models.ImageField(upload_to = 'image',default='../uploads/image/320.png',blank=True,null=True)
     roles = models.CharField(max_length=50, choices = ROLES, null=True,blank=True)
     def __str__(self):
         return self.username
 
 class Doner(CustomUser):
-    blood_type = models.ForeignKey(BloodType,on_delete=models.CASCADE)
+    blood_type = models.ForeignKey(BloodType,on_delete=models.CASCADE,blank=True,null=True,default=1)
     date_of_birth = models.DateField(blank=True,null=True,default='2022-01-01')
     chronic_diseases = models.BooleanField(default=False,blank=True,null=True)
 
 class Patient(CustomUser):
-    blood_type = models.ForeignKey(BloodType,on_delete=models.CASCADE)
+    blood_type = models.ForeignKey(BloodType,on_delete=models.CASCADE,blank=True,null=True,default=1)
     reason = models.TextField()
     date_of_birth = models.DateField(blank=True,null=True,default='2022-01-01')
 

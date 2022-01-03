@@ -8,3 +8,5 @@ class BloodType(models.Model):
 
     def __str__(self):
         return self.blood_type
+
+        

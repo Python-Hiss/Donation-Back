@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import AddListView,DetailAddView,ListView,CustomObtainAuthToken,countview,CreateHospitalUserView,HospitalDetail,HospitalListView,counthospitalview
+from .views import AddListView,DetailAddView,ListView,CustomObtainAuthToken,countview,CreateHospitalUserView,HospitalDetail,HospitalListView,counthospitalview,Blood_O_Positive_List,Blood_A_Nigative_List,Blood_A_Positive_List,Blood_AB_Positive_List,Blood_O_Nigative_List,Blood_B_Nigative_List,Blood_B_Positive_List,Blood_AB_Nigative_List
+
 # from .views import Blood_O_List,Blood_B_List,Blood_A_List,Blood_AB_List
-from .views import AddListView
 urlpatterns = [
     path('donater/signup/',AddListView.as_view(),name= 'add_data'),
     path('donater/<int:pk>/',DetailAddView.as_view(),name = 'detail_data'),
@@ -13,8 +13,12 @@ urlpatterns = [
     path("hospital/view/", HospitalListView.as_view(), name="hospital_list"),
     path('hospital/count/',counthospitalview.as_view(),name = 'counthospitalview'),
 
-#     path('blood/O/',Blood_O_List.as_view(),name = 'blood_O'),
-#     path('blood/A/',Blood_A_List.as_view(),name = 'blood_A'),
-#     path('blood/B/',Blood_B_List.as_view(),name = 'blood_B'),
-#     path('blood/AB/',Blood_AB_List.as_view(),name = 'blood_AB'),
+    path('blood/O+/',Blood_O_Positive_List.as_view(),name = 'blood_O_Po'),
+    path('blood/O-/',Blood_O_Nigative_List.as_view(),name = 'blood_O_Ne'),
+    path('blood/A-/',Blood_A_Nigative_List.as_view(),name = 'blood_A_Ne'),
+    path('blood/A+/',Blood_A_Positive_List.as_view(),name = 'blood_A_Po'),
+    path('blood/B-/',Blood_B_Nigative_List.as_view(),name = 'blood_B_Ne'),
+    path('blood/B+/',Blood_B_Positive_List.as_view(),name = 'blood_B_Po'),
+    path('blood/AB+/',Blood_AB_Positive_List.as_view(),name = 'blood_AB_Po'),
+    path('blood/AB-/',Blood_AB_Nigative_List.as_view(),name = 'blood_AB_Ne'),
 ]
