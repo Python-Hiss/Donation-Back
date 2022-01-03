@@ -41,7 +41,7 @@ env = environ.Env(
 
 ALLOWED_HOSTS = tuple(env.list("ALLOWED_HOSTS"))
 # Application definition
-
+CORS_ORIGIN_ALLOW_ALL=True
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -57,7 +57,6 @@ INSTALLED_APPS = [
     ## local
     'blood_donating',
     'accounts',
-    'hospital'
 ]
 
 MIDDLEWARE = [
@@ -156,10 +155,10 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+AUTH_USER_MODEL = 'accounts.CustomUser'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
