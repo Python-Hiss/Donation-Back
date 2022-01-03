@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions
-from .serializer import AddDonaterSerializer,MyTokenObtainPairSerializer,EditDonaterSerializer,EditHospitalUser,AddHospitalUser
+from .serializer import BloodSerializer,AddDonaterSerializer,MyTokenObtainPairSerializer,EditDonaterSerializer,EditHospitalUser,AddHospitalUser
 from .models import CustomUser
 from rest_framework import permissions
 from django.shortcuts import get_object_or_404
@@ -86,6 +86,29 @@ class counthospitalview(APIView):
 
     def get(self, request, format=None):
         print(request.data)
-        user_count = CustomUser.objects.filter(roles="hospital").count()
+        user_count = CustomUser.objects.filter(roles__in=['hospital','Donater']).count()
         content = {'user_count': user_count}
         return Response(content)
+
+## filter Blood
+class Blood_O_List(generics.ListAPIView):
+    typeBlood=['O+','O-']
+    serializer_class = BloodSerializer
+    queryset = CustomUser.objects.filter(blood_type__in=typeBlood)
+    permission_classes = [permissions.AllowAny]
+
+class Blood_A_List(generics.ListAPIView):
+    typeBlood=['O+','O-','A+','A-']
+    serializer_class = BloodSerializer
+    queryset = CustomUser.objects.filter(blood_type__in=typeBlood)
+    permission_classes = [permissions.AllowAny]
+class Blood_B_List(generics.ListAPIView):
+    typeBlood=['O+','O-','B+','B-']
+    serializer_class = BloodSerializer
+    queryset = CustomUser.objects.filter(blood_type__in=typeBlood)
+    permission_classes = [permissions.AllowAny]
+class Blood_AB_List(generics.ListAPIView):
+    typeBlood=['O+','O-','B+','B-','A+','A-','AB+','AB-']
+    serializer_class = BloodSerializer
+    queryset = CustomUser.objects.filter(blood_type__in=typeBlood)
+    permission_classes = [permissions.AllowAny]

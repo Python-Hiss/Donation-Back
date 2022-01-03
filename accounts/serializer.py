@@ -45,7 +45,7 @@ class EditDonaterSerializer(serializers.ModelSerializer):
      class Meta:
         model = CustomUser
         fields = ('username','first_name','email','date_of_birth','image','location','phone_number'
-        ,'date','chronic_diseases','blood_type','date'
+        ,'date','chronic_diseases','blood_type'
         )
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -111,3 +111,25 @@ class EditHospitalUser(serializers.ModelSerializer):
         model = CustomUser
         # Tuple of serialized model fields (see link [2])
         fields = ( "first_name","username", "password", "website",'email','image' )
+
+
+class BloodSerializer(serializers.ModelSerializer):
+     def create(self, validated_data):
+
+        user = CustomUser.objects.create_user(
+
+            blood_type = validated_data['blood_type'],
+            phone_number = validated_data['phone_number'],
+            first_name = validated_data['first_name'],
+            email = validated_data['email'],
+            image = validated_data['image'],
+            location = validated_data['location'],
+            
+        )
+
+        return user
+     class Meta:
+        model = CustomUser
+        fields = ('first_name','email','image','location','phone_number'
+        ,'blood_type'
+        )

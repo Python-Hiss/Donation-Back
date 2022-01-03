@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     ## local
     'blood_donating',
     'accounts',
+    'Address'
 ]
 
 MIDDLEWARE = [
