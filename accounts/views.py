@@ -1,96 +1,119 @@
 # from django.shortcuts import render
 from rest_framework import generics, permissions
-# from .serializer import BloodSerializer,AddDonaterSerializer,MyTokenObtainPairSerializer,EditDonaterSerializer,EditHospitalUser,AddHospitalUser
-from .serializer import AddDonaterSerializer
-from .models import CustomUser
-# from rest_framework import permissions
-# from django.shortcuts import get_object_or_404
-# from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializer import AddDonerSerializer,MyTokenObtainPairSerializer,EditDonerSerializer,EditHospitalUser,AddHospitalUser,AddPatientSerializer,EditPatientSerializer
+from .models import Patient,Hospital,Doner
+from rest_framework_simplejwt.views import TokenObtainPairView
 
-# from rest_framework.renderers import JSONRenderer
-# from rest_framework.response import Response
-# from rest_framework.views import APIView
+from rest_framework.renderers import JSONRenderer
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
-# # Create your views here.
 
-# class CustomObtainAuthToken(TokenObtainPairView):
-#     serializer_class = MyTokenObtainPairSerializer
+class CustomObtainAuthToken(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
 
-
+### doner 
 
 class AddListView(generics.CreateAPIView):
-    serializer_class = AddDonaterSerializer
-    queryset = CustomUser.objects.all()
+    serializer_class = AddDonerSerializer
+    queryset = Doner.objects.all()
     permission_classes = [permissions.AllowAny]
 
-# class DetailAddView(generics.RetrieveUpdateDestroyAPIView):
-#     serializer_class = EditDonaterSerializer
-#     queryset = CustomUser.objects.all()
-   
-    
-#     # def get_object(self):
-#     #     UserName= self.kwargs.get("username")
-#     #     return get_object_or_404(CustomUser, username=UserName)
-# class ListView(generics.ListAPIView):
-#     serializer_class = EditDonaterSerializer
-#     queryset = CustomUser.objects.filter(roles="Donater")
+
+class DetailAddView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = EditDonerSerializer
+    queryset = Doner.objects.all()
+
+
+class ListView(generics.ListAPIView):
+    serializer_class = EditDonerSerializer
+    queryset = Doner.objects.all()
     
 
-# class countview(APIView):
-#     """
-#     A view that returns the count of active users.
-#     """
-#     permission_classes = [permissions.AllowAny]
-#     renderer_classes = [JSONRenderer]
+class countview(APIView):
+    """
+    A view that returns the count of active users.
+    """
+    permission_classes = [permissions.AllowAny]
+    renderer_classes = [JSONRenderer]
 
-#     def get(self, request, format=None):
-#         print(request.data)
-#         user_count = CustomUser.objects.filter(roles="Donater").count()
-#         content = {'user_count': user_count}
-#         return Response(content)
-
-
-# ## hospital 
+    def get(self, request, format=None):
+        print(request.data)
+        user_count = Doner.objects.count()
+        content = {'user_count': user_count}
+        return Response(content)
 
 
-# class CreateHospitalUserView(generics.CreateAPIView):
-#     """
-#     A view that signup hospital.
-#     """
-#     model = CustomUser
-#     permission_classes = [
-#         permissions.AllowAny # Or anon users can't register
-#     ]
-#     serializer_class = AddHospitalUser
+## hospital 
 
-# class HospitalDetail(generics.RetrieveUpdateDestroyAPIView):
-#     """
-#     A view that returns the detail of hospital 
-#     """
-#     queryset = CustomUser.objects.all()
-#     serializer_class = EditHospitalUser
-#     # def get_object(self):
-#     #     UserName= self.kwargs.get("username")
-#     #     return get_object_or_404(CustomUser, username=UserName)
 
-# class HospitalListView(generics.ListAPIView):
-#     serializer_class = EditHospitalUser
-#     queryset = CustomUser.objects.filter(roles="hospital")
+class CreateHospitalUserView(generics.CreateAPIView):
+    """
+    A view that signup hospital.
+    """
+    model = Hospital
+    permission_classes = [
+        permissions.AllowAny # Or anon users can't register
+    ]
+    serializer_class = AddHospitalUser
 
-# class counthospitalview(APIView):
-#     """
-#     A view that returns the count of active users.
-#     """
-#     permission_classes = [permissions.AllowAny]
-#     renderer_classes = [JSONRenderer]
+class HospitalDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    A view that returns the detail of hospital 
+    """
+    queryset = Hospital.objects.all()
+    serializer_class = EditHospitalUser
 
-#     def get(self, request, format=None):
-#         print(request.data)
-#         user_count = CustomUser.objects.filter(roles__in=['hospital','Donater']).count()
-#         content = {'user_count': user_count}
-#         return Response(content)
 
+class HospitalListView(generics.ListAPIView):
+    serializer_class = EditHospitalUser
+    queryset = Hospital.objects.filter(roles="hospital")
+
+class counthospitalview(APIView):
+    """
+    A view that returns the count of active users.
+    """
+    permission_classes = [permissions.AllowAny]
+    renderer_classes = [JSONRenderer]
+
+    def get(self, request, format=None):
+        print(request.data)
+        user_count = Hospital.objects.count()
+        content = {'user_count': user_count}
+        return Response(content)
+
+
+# Patient
+
+class AddPatientView(generics.CreateAPIView):
+    serializer_class = AddPatientSerializer
+    queryset = Patient.objects.all()
+    permission_classes = [permissions.AllowAny]
+
+
+class DetailPatientView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = EditPatientSerializer
+    queryset = Patient.objects.all()
+
+
+class ListPatientView(generics.ListAPIView):
+    serializer_class = EditPatientSerializer
+    queryset = Patient.objects.all()
+    
+
+class countPatientview(APIView):
+    """
+    A view that returns the count of active users.
+    """
+    permission_classes = [permissions.AllowAny]
+    renderer_classes = [JSONRenderer]
+
+    def get(self, request, format=None):
+        print(request.data)
+        user_count = Patient.objects.count()
+        content = {'user_count': user_count}
+        return Response(content)
 
 
 
