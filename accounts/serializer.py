@@ -1,37 +1,50 @@
 from django.db.models import fields
 from rest_framework import serializers
-from .models import Account
+from .models import CustomUser,Doner,Hospital,Patient
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-class AddSerializer(serializers.ModelSerializer):
+class AddDonerSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
     def create(self, validated_data):
 
-        user = Account.objects.create_user(
+        user = Doner.objects.create_user(
             username=validated_data['username'],
             password=validated_data['password'],
-            age=validated_data['age'],
-            group = validated_data['group'],
             blood_type = validated_data['blood_type'],
-            chronic_diseases = validated_data['chronic_diseases'],
-            data = validated_data['data'],
-            phone_number = validated_data['phone_number'],
             first_name = validated_data['first_name'],
-            last_name = validated_data['last_name'],
             email = validated_data['email'],
-            location = validated_data['location'],
-            donate = validated_data['donate'],
-            image = validated_data['image']
+            chronic_diseases = validated_data['chronic_diseases'],
+            roles = validated_data['roles']
         )
 
         return user
 
     class Meta:
-        model = Account
-        fields = ('id','first_name','last_name','username',
-        'email','password','age','blood_type','phone_number','location',
-        'chronic_diseases','data','donate','group','image'
+        model = Doner
+        fields = ('username','password','first_name','email','blood_type','address','chronic_diseases','image','roles'
+        )
+
+class EditDonerSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+         
+        user = Doner.objects.create_user(
+            username=validated_data['username'],
+            first_name = validated_data['first_name'],
+            email = validated_data['email'],
+            image =  validated_data['image'],
+            chronic_diseases = validated_data['chronic_diseases'],
+            address = validated_data['address'],
+            blood_type = validated_data['blood_type'],
+            
+        )
+
+        return user
+
+    class Meta:
+        model = Doner
+        depth = 2
+        fields = ('username','first_name','email','chronic_diseases','image','address','blood_type'
         )
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -41,9 +54,134 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['refresh'] = str(refresh)
         data['access'] = str(refresh.access_token)
 
-        # Add extra responses here
         data['id'] = self.user.id
         data['username'] = self.user.username
+        data['Role'] = self.user.roles
 
         return data
 
+
+
+## hospital serializer
+
+class AddHospitalUser(serializers.ModelSerializer):
+
+    password = serializers.CharField(write_only=True)
+    # website = serializers.CharField(write_only=True)
+
+    def create(self, validated_data):
+
+        user = Hospital.objects.create_user(
+            first_name = validated_data['first_name'],
+            username=validated_data['username'],
+            password=validated_data['password'],
+            # website = validated_data['website'],
+            email = validated_data['email'],
+            roles =  validated_data['roles']
+        )
+
+        return user
+
+    class Meta:
+        model = Hospital
+        fields = ( "first_name","username", "password", "website",'email','roles' )
+
+
+class EditHospitalUser(serializers.ModelSerializer):
+
+    password = serializers.CharField(write_only=True)
+    # website = serializers.CharField(write_only=True)
+
+    def create(self, validated_data):
+
+        user = Hospital.objects.create_user(
+            first_name = validated_data['first_name'],
+            username=validated_data['username'],
+            website = validated_data['website'],
+            image = validated_data['image'],
+            email = validated_data['email'],
+        )
+
+        return user
+
+    class Meta:
+        model = Hospital
+        # Tuple of serialized model fields (see link [2])
+        fields = ( "first_name","username","website",'email','image' )
+
+
+
+class AddPatientSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    def create(self, validated_data):
+
+        user = Patient.objects.create_user(
+            username=validated_data['username'],
+            password=validated_data['password'],
+            blood_type = validated_data['blood_type'],
+            first_name = validated_data['first_name'],
+            email = validated_data['email'],
+            image =  validated_data['image'],
+            reason = validated_data['reason'],
+            address = validated_data['address'],
+            roles = validated_data['roles']
+        )
+
+        return user
+
+    class Meta:
+        model = Patient
+        fields = ('username','password','first_name','email','blood_type', 'address', 'reason','image','roles'
+        )
+
+class EditPatientSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+
+        user = Patient.objects.create_user(
+            username=validated_data['username'],
+            first_name = validated_data['first_name'],
+            email = validated_data['email'],
+            image =  validated_data['image'],
+            reason = validated_data['reason'],
+            
+        )
+
+        return user
+
+    class Meta:
+        model = Patient
+        fields = ('username','first_name','email','reason','image'
+        )
+
+class BloodSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+         
+        user = Doner.objects.create_user(
+            first_name = validated_data['first_name'],
+            email = validated_data['email'],
+            image =  validated_data['image'],
+            address = validated_data['address'],
+            blood_type = validated_data['blood_type'],
+            phone_number = validated_data['phone_number'],
+            
+        )
+
+        return user
+
+    class Meta:
+        model = Doner
+        depth = 2
+        fields = ('first_name','email','image','address','blood_type','phone_number'
+        )
+
+from django.contrib.auth.models import User
+
+class ChangePasswordSerializer(serializers.Serializer):
+    model = User
+
+    """
+    Serializer for password change endpoint.
+    """
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
