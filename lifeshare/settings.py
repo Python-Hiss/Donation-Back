@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_rest_passwordreset',
     # 3rd party
     "whitenoise.runserver_nostatic",
     "rest_framework",
@@ -58,6 +59,7 @@ INSTALLED_APPS = [
     'blood_donating',
     'accounts',
     'Address'
+    
 ]
 
 MIDDLEWARE = [
@@ -170,3 +172,15 @@ REST_FRAMEWORK = {
 
 MEDIA_ROOT = BASE_DIR / 'uploads'
 MEDIA_URL = '/files/'
+
+environ.Env.read_env()
+env = environ.Env(
+    SENDGRID_API_KEY=(str, "")
+)
+import os
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST_PASSWORD = env.str('SENDGRID_API_KEY')
+EMAIL_HOST =  'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
