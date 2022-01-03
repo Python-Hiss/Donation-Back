@@ -23,5 +23,5 @@ class Address(models.Model):
     direction = models.TextField(blank=True,null=True)
     
 
-    # def __str__(self):
-    #     return self.area
+    def __str__(self):
+        return f'{self.city} - {self.area}'
