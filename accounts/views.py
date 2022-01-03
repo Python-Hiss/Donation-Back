@@ -68,7 +68,7 @@ class HospitalDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class HospitalListView(generics.ListAPIView):
     serializer_class = EditHospitalUser
-    queryset = Hospital.objects.filter(roles="hospital")
+    queryset = Hospital.objects.all()
 
 class counthospitalview(APIView):
     """

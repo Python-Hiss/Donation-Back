@@ -88,7 +88,7 @@ class AddHospitalUser(serializers.ModelSerializer):
 
 class EditHospitalUser(serializers.ModelSerializer):
 
-    password = serializers.CharField(write_only=True)
+    # password = serializers.CharField(write_only=True)
     # website = serializers.CharField(write_only=True)
 
     def create(self, validated_data):
