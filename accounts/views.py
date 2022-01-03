@@ -24,6 +24,8 @@ class AddListView(generics.CreateAPIView):
 class DetailAddView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = EditDonerSerializer
     queryset = Doner.objects.all()
+    permission_classes = [permissions.AllowAny]
+
 
 
 class ListView(generics.ListAPIView):

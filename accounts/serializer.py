@@ -36,15 +36,18 @@ class EditDonerSerializer(serializers.ModelSerializer):
             email = validated_data['email'],
             image =  validated_data['image'],
             chronic_diseases = validated_data['chronic_diseases'],
-            
+            phone_number = validated_data['phone_number'],
+            blood_type = validated_data['blood_type'],
         )
 
         return user
 
     class Meta:
+        depth = 2
         model = Doner
-        fields = ('username','first_name','email','chronic_diseases','image'
+        fields = ('username','first_name','email','chronic_diseases','image','phone_number','blood_type'
         )
+        
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
@@ -143,14 +146,16 @@ class EditPatientSerializer(serializers.ModelSerializer):
             email = validated_data['email'],
             image =  validated_data['image'],
             reason = validated_data['reason'],
-            
+            blood_type = validated_data['blood_type'],
+            phone_number = validated_data['phone_number'],
         )
 
         return user
 
     class Meta:
+        depth = 2
         model = Patient
-        fields = ('username','first_name','email','reason','image'
+        fields = ('username','first_name','email','reason','image', 'blood_type','phone_number'
         )
 
 # class BloodSerializer(serializers.ModelSerializer):
