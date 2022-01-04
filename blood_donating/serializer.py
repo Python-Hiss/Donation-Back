@@ -1,4 +1,5 @@
-from .models import BloodType, Post
+from .models import BloodType
+from .models2 import Post
 from rest_framework import serializers
 
 
@@ -10,5 +11,10 @@ class PostSerializer(serializers.ModelSerializer):
 class BloodSerilaizer(serializers.ModelSerializer):
     class Meta:
         model = BloodType
-        fields = ['blood_type']
+        fields = ['blood_type','description']
+
+class AddBloodSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BloodType
+        fields = ('id','blood_type','description')
 

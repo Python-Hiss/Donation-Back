@@ -2,6 +2,10 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from Address.models import Address
 from blood_donating.models import BloodType
+from django.dispatch import receiver
+from django.urls import reverse
+from django_rest_passwordreset.signals import reset_password_token_created
+from django.core.mail import send_mail  
 
 class CustomUser(AbstractUser):
     ROLES = (
@@ -17,6 +21,7 @@ class CustomUser(AbstractUser):
     roles = models.CharField(max_length=50, choices = ROLES, null=True,blank=True)
     def __str__(self):
         return self.username
+
 
 class Doner(CustomUser):
     blood_type = models.ForeignKey(BloodType,on_delete=models.CASCADE,blank=True,null=True,default=1)
@@ -36,10 +41,7 @@ class Hospital(CustomUser):
 
 
 
-from django.dispatch import receiver
-from django.urls import reverse
-from django_rest_passwordreset.signals import reset_password_token_created
-from django.core.mail import send_mail  
+
 
 
 @receiver(reset_password_token_created)

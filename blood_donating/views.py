@@ -3,7 +3,8 @@ from rest_framework import generics, permissions
 
 # Create your views here.
 from rest_framework.generics import CreateAPIView , ListAPIView,RetrieveUpdateDestroyAPIView
-from .models import BloodType, Post
+from .models import BloodType
+from .models2 import  Post
 from .serializer import PostSerializer, BloodSerilaizer,AddBloodSerializer
 
 class AddBloodView(generics.CreateAPIView):
