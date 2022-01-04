@@ -14,9 +14,8 @@ class AddDonerSerializer(serializers.ModelSerializer):
             blood_type = validated_data['blood_type'],
             first_name = validated_data['first_name'],
             email = validated_data['email'],
-            image =  validated_data['image'],
             chronic_diseases = validated_data['chronic_diseases'],
-            address = validated_data['address'],
+            # address = validated_data['address'],
             roles = validated_data['roles']
         )
 
@@ -24,7 +23,7 @@ class AddDonerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Doner
-        fields = ('username','password','first_name','email','blood_type','address','chronic_diseases','image','roles'
+        fields = ('username','password','first_name','email','blood_type','chronic_diseases','roles'
         )
 
 class EditDonerSerializer(serializers.ModelSerializer):
@@ -126,9 +125,6 @@ class AddPatientSerializer(serializers.ModelSerializer):
             blood_type = validated_data['blood_type'],
             first_name = validated_data['first_name'],
             email = validated_data['email'],
-            image =  validated_data['image'],
-            reason = validated_data['reason'],
-            address = validated_data['address'],
             roles = validated_data['roles']
         )
 
@@ -136,7 +132,7 @@ class AddPatientSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Patient
-        fields = ('username','password','first_name','email','blood_type', 'address', 'reason','image','roles'
+        fields = ('username','password','first_name','email','blood_type', 'roles'
         )
 
 class EditPatientSerializer(serializers.ModelSerializer):
