@@ -16,8 +16,8 @@ class CustomUser(AbstractUser):
 
     )
     phone_number = models.CharField(max_length=20,blank=True, help_text='Contact phone number')
-    address = models.ForeignKey(Address,on_delete=models.CASCADE,default=1,blank=True,null=True,related_name='tracks')
-    image = models.ImageField(upload_to = 'image',default='../uploads/image/320.png',blank=True,null=True)
+    # address = models.ForeignKey(Address,on_delete=models.CASCADE,default=1,blank=True,null=True,related_name='tracks')
+    image = models.ImageField(upload_to = 'image',default='../uploads/image/default.jpg',blank=True,null=True)
     roles = models.CharField(max_length=50, choices = ROLES, null=True,blank=True)
     def __str__(self):
         return self.username
