@@ -49,13 +49,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_rest_passwordreset',
     # 3rd party
     "whitenoise.runserver_nostatic",
     "rest_framework",
     "corsheaders",
     ## local
     'blood_donating',
-    'accounts'
+    'accounts',
+    'Address'
+    
 ]
 
 MIDDLEWARE = [
@@ -131,7 +134,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "Asia/Amman"
 
 USE_I18N = True
 
@@ -148,3 +151,30 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication'
+    ],
+}
+
+MEDIA_ROOT = BASE_DIR / 'uploads'
+MEDIA_URL = '/files/'
+
+environ.Env.read_env()
+env = environ.Env(
+    SENDGRID_API_KEY=(str, "")
+)
+import os
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST_PASSWORD = env.str('SENDGRID_API_KEY')
+EMAIL_HOST =  'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'

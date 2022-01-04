@@ -16,7 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
-
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+from django.conf.urls.static import static
+from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path('accounts/',include('accounts.urls')),
+    path('address/',include('Address.urls')),
+    path('blood/',include('blood_donating.urls')),
+    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'), 
+
+]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+ 
