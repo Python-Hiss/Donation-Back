@@ -1,8 +1,14 @@
-from django.db.models import fields
+from .models import BloodType, Post
 from rest_framework import serializers
-from .models import BloodType
 
-class AddBloodSerializer(serializers.ModelSerializer):
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ["id",'patient', 'title',"time","text","publish"]
+
+class BloodSerilaizer(serializers.ModelSerializer):
     class Meta:
         model = BloodType
-        fields = ('id','blood_type','description')
+        fields = ['blood_type']
+

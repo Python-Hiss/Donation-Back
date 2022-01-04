@@ -24,6 +24,8 @@ class AddListView(generics.CreateAPIView):
 class DetailAddView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = EditDonerSerializer
     queryset = Doner.objects.all()
+    permission_classes = [permissions.AllowAny]
+
 
 
 class ListView(generics.ListAPIView):
@@ -41,77 +43,6 @@ class countview(APIView):
     def get(self, request, format=None):
         print(request.data)
         user_count = Doner.objects.count()
-        content = {'user_count': user_count}
-        return Response(content)
-
-
-## hospital 
-
-
-class CreateHospitalUserView(generics.CreateAPIView):
-    """
-    A view that signup hospital.
-    """
-    model = Hospital
-    permission_classes = [
-        permissions.AllowAny # Or anon users can't register
-    ]
-    serializer_class = AddHospitalUser
-
-class HospitalDetail(generics.RetrieveUpdateDestroyAPIView):
-    """
-    A view that returns the detail of hospital 
-    """
-    queryset = Hospital.objects.all()
-    serializer_class = EditHospitalUser
-
-
-class HospitalListView(generics.ListAPIView):
-    serializer_class = EditHospitalUser
-    queryset = Hospital.objects.filter(roles="hospital")
-
-class counthospitalview(APIView):
-    """
-    A view that returns the count of active users.
-    """
-    permission_classes = [permissions.AllowAny]
-    renderer_classes = [JSONRenderer]
-
-    def get(self, request, format=None):
-        print(request.data)
-        user_count = Hospital.objects.count()
-        content = {'user_count': user_count}
-        return Response(content)
-
-
-# Patient
-
-class AddPatientView(generics.CreateAPIView):
-    serializer_class = AddPatientSerializer
-    queryset = Patient.objects.all()
-    permission_classes = [permissions.AllowAny]
-
-
-class DetailPatientView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = EditPatientSerializer
-    queryset = Patient.objects.all()
-
-
-class ListPatientView(generics.ListAPIView):
-    serializer_class = EditPatientSerializer
-    queryset = Patient.objects.all()
-    
-
-class countPatientview(APIView):
-    """
-    A view that returns the count of active users.
-    """
-    permission_classes = [permissions.AllowAny]
-    renderer_classes = [JSONRenderer]
-
-    def get(self, request, format=None):
-        print(request.data)
-        user_count = Patient.objects.count()
         content = {'user_count': user_count}
         return Response(content)
 
@@ -246,3 +177,74 @@ class SendFormEmail(View):
 #         user_id =self.context['request'].user.id
 #         validated_data['from_user'].id=user_id
 #         return Follow.objects.create(**validated_data)
+## hospital 
+
+
+class CreateHospitalUserView(generics.CreateAPIView):
+    """
+    A view that signup hospital.
+    """
+    model = Hospital
+    permission_classes = [
+        permissions.AllowAny # Or anon users can't register
+    ]
+    serializer_class = AddHospitalUser
+
+class HospitalDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    A view that returns the detail of hospital 
+    """
+    queryset = Hospital.objects.all()
+    serializer_class = EditHospitalUser
+
+
+class HospitalListView(generics.ListAPIView):
+    serializer_class = EditHospitalUser
+    queryset = Hospital.objects.all()
+
+class counthospitalview(APIView):
+    """
+    A view that returns the count of active users.
+    """
+    permission_classes = [permissions.AllowAny]
+    renderer_classes = [JSONRenderer]
+
+    def get(self, request, format=None):
+        print(request.data)
+        user_count = Hospital.objects.count()
+        content = {'user_count': user_count}
+        return Response(content)
+
+
+# Patient
+
+class AddPatientView(generics.CreateAPIView):
+    serializer_class = AddPatientSerializer
+    queryset = Patient.objects.all()
+    permission_classes = [permissions.AllowAny]
+
+
+class DetailPatientView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = EditPatientSerializer
+    queryset = Patient.objects.all()
+
+
+class ListPatientView(generics.ListAPIView):
+    serializer_class = EditPatientSerializer
+    queryset = Patient.objects.all()
+    
+
+class countPatientview(APIView):
+    """
+    A view that returns the count of active users.
+    """
+    permission_classes = [permissions.AllowAny]
+    renderer_classes = [JSONRenderer]
+
+    def get(self, request, format=None):
+        print(request.data)
+        user_count = Patient.objects.count()
+        content = {'user_count': user_count}
+        return Response(content)
+
+

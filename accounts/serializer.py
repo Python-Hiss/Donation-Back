@@ -14,7 +14,9 @@ class AddDonerSerializer(serializers.ModelSerializer):
             blood_type = validated_data['blood_type'],
             first_name = validated_data['first_name'],
             email = validated_data['email'],
+            image =  validated_data['image'],
             chronic_diseases = validated_data['chronic_diseases'],
+            address = validated_data['address'],
             roles = validated_data['roles']
         )
 
@@ -27,25 +29,25 @@ class AddDonerSerializer(serializers.ModelSerializer):
 
 class EditDonerSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
-         
+
         user = Doner.objects.create_user(
             username=validated_data['username'],
             first_name = validated_data['first_name'],
             email = validated_data['email'],
             image =  validated_data['image'],
             chronic_diseases = validated_data['chronic_diseases'],
-            address = validated_data['address'],
+            phone_number = validated_data['phone_number'],
             blood_type = validated_data['blood_type'],
-            
         )
 
         return user
 
     class Meta:
-        model = Doner
         depth = 2
-        fields = ('username','first_name','email','chronic_diseases','image','address','blood_type'
+        model = Doner
+        fields = ('username','first_name','email','chronic_diseases','image','phone_number','blood_type'
         )
+        
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
@@ -75,7 +77,7 @@ class AddHospitalUser(serializers.ModelSerializer):
             first_name = validated_data['first_name'],
             username=validated_data['username'],
             password=validated_data['password'],
-            # website = validated_data['website'],
+            website = validated_data['website'],
             email = validated_data['email'],
             roles =  validated_data['roles']
         )
@@ -89,7 +91,7 @@ class AddHospitalUser(serializers.ModelSerializer):
 
 class EditHospitalUser(serializers.ModelSerializer):
 
-    password = serializers.CharField(write_only=True)
+    # password = serializers.CharField(write_only=True)
     # website = serializers.CharField(write_only=True)
 
     def create(self, validated_data):
@@ -144,16 +146,21 @@ class EditPatientSerializer(serializers.ModelSerializer):
             email = validated_data['email'],
             image =  validated_data['image'],
             reason = validated_data['reason'],
-            
+            blood_type = validated_data['blood_type'],
+            phone_number = validated_data['phone_number'],
         )
 
         return user
 
     class Meta:
+        depth = 2
         model = Patient
-        fields = ('username','first_name','email','reason','image'
+        fields = ('username','first_name','email','reason','image', 'blood_type','phone_number'
         )
 
+
+
+        
 class BloodSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
          

@@ -1,5 +1,8 @@
 from django.urls import path
-from .views import AddBloodView
+from .views import PostViewSet , GetViewSet,UpdateDestroyViewSet, EditBlood
 urlpatterns = [
-    path('add/',AddBloodView.as_view(),name= 'add_blod'),
+    path('add/', PostViewSet.as_view(), name='add_post'),
+    path('show/',GetViewSet.as_view(),  name= "show-post"),
+    path('update-delete/<int:pk>/',UpdateDestroyViewSet.as_view(),name= "update-delete-post"),
+    path('update-blood/<int:pk>/',EditBlood.as_view(),name= "update-delete-post")
 ]
