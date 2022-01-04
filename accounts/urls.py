@@ -1,7 +1,7 @@
 from django.urls import path,include
 from django.views.generic import TemplateView
 from .views import SendFormEmail,ChangePasswordView, AddListView,DetailAddView,ListView,CustomObtainAuthToken,countview,CreateHospitalUserView,HospitalDetail,HospitalListView,counthospitalview,Blood_O_Positive_List,Blood_A_Nigative_List,Blood_A_Positive_List,Blood_AB_Positive_List,Blood_O_Nigative_List,Blood_B_Nigative_List,Blood_B_Positive_List,Blood_AB_Nigative_List, AddPatientView,ListPatientView,DetailPatientView,countPatientview
-
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     path('donater/signup/',AddListView.as_view(),name= 'add_data'),
@@ -17,7 +17,7 @@ urlpatterns = [
     path('hospital/count/',counthospitalview.as_view(),name = 'counthospitalview'),
 
     path('templates/', TemplateView.as_view(template_name="home.html"), name='home'),
-    path('send-form-email/',SendFormEmail.as_view(), name='send_email'),
+    path('send-form-email/',csrf_exempt(SendFormEmail.as_view()), name='send_email'),
 
     path('blood/O+/',Blood_O_Positive_List.as_view(),name = 'blood_O_Po'),
     path('blood/O-/',Blood_O_Nigative_List.as_view(),name = 'blood_O_Ne'),

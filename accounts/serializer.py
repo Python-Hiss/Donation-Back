@@ -102,6 +102,8 @@ class EditHospitalUser(serializers.ModelSerializer):
             website = validated_data['website'],
             image = validated_data['image'],
             email = validated_data['email'],
+            phone_number = validated_data['phone_number'],
+            address = validated_data['address']
         )
 
         return user
@@ -109,7 +111,7 @@ class EditHospitalUser(serializers.ModelSerializer):
     class Meta:
         model = Hospital
         # Tuple of serialized model fields (see link [2])
-        fields = ( "first_name","username","website",'email','image' )
+        fields = ( 'address',"first_name","username","website",'email','image','phone_number')
 
 
 

@@ -1,4 +1,5 @@
 # from django.shortcuts import render
+from django.http import response
 from rest_framework import generics, permissions
 from .serializer import AddDonerSerializer,MyTokenObtainPairSerializer,EditDonerSerializer,EditHospitalUser,AddHospitalUser,AddPatientSerializer,EditPatientSerializer,BloodSerializer
 from .models import Patient,Hospital,Doner
@@ -146,40 +147,56 @@ from django.views.generic import View
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.core.mail import send_mail, send_mass_mail
+from pandas import json_normalize,read_json
 
 # from django.core.mail import send_mail
 # send_mail('Example Subject', 'from django backend', '21025560@student.ltuc.com', ['koute47@gmail.com'])
+import json
 
 
 class SendFormEmail(View):
 
-    def  get(self, request):
 
-        # Get the form data 
-       
-
-        # Send Email
+    def post(self,request):
+        body_unicode = request.body
+    #    dataGet = request.GET.get('name',None)
+        email = json.loads(body_unicode)['email']
+        print(email)
         send_mail(
-            'Subject - Django Email Testing', 
-            'Hello yaseen',
+            'Subject - Donate Blood', 
+            'Hello our super hero we need you for save life',
+            '21025560@student.ltuc.com', # Admin
+            [
+                email
+            ]
+        ) 
+        return response.JsonResponse({'email':'send correct'})
+
+
+
+from django.dispatch import receiver
+from django.urls import reverse
+from django_rest_passwordreset.signals import reset_password_token_created
+
+
+@receiver(reset_password_token_created)
+def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
+
+    email_plaintext_message = "{}?token={}".format(reverse('password_reset:reset-password-request'), reset_password_token.key)
+
+    
+    # ['koute47@gmail.com']
+    
+    send_mail(
+            'Subject - Donate Blood', 
+            'Hello our super hero we need you for save life',
             '21025560@student.ltuc.com', # Admin
             [
                 'koute47@gmail.com'
             ]
-        ) 
-
-        # Redirect to same page after form submit
-        messages.success(request, ('Email sent successfully.'))
-        return redirect('home') 
-
-
-# def create(self, validated_data): #post
-#         user_id =self.context['request'].user.id
-#         validated_data['from_user'].id=user_id
-#         return Follow.objects.create(**validated_data)
-## hospital 
-
-
+    )
+    print(reset_password_token.user.email)
+    return response.JsonResponse({'email':'send correct'})
 class CreateHospitalUserView(generics.CreateAPIView):
     """
     A view that signup hospital.
@@ -196,7 +213,9 @@ class HospitalDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Hospital.objects.all()
     serializer_class = EditHospitalUser
-
+    permission_classes = [
+        permissions.AllowAny # Or anon users can't register
+    ]
 
 class HospitalListView(generics.ListAPIView):
     serializer_class = EditHospitalUser
