@@ -4,4 +4,4 @@ build:
 release:
   image: web
 run:
-  web: gunicorn cookie_project.wsgi --workers 4
+  web: gunicorn lifeshare.wsgi --workers 4

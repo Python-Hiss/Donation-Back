@@ -14,7 +14,7 @@ from pathlib import Path
 import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+environ.Env.read_env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -173,7 +173,7 @@ REST_FRAMEWORK = {
 MEDIA_ROOT = BASE_DIR / 'uploads'
 MEDIA_URL = '/files/'
 
-environ.Env.read_env()
+
 env = environ.Env(
     SENDGRID_API_KEY=(str, "")
 )
@@ -186,4 +186,4 @@ EMAIL_HOST =  'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'apikey'
 
 
-# CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']

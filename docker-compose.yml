@@ -1,9 +1,9 @@
-version: '4'
+version: '3.9'
 
 services:
   web:
     build: .
-    command: gunicorn cookie_project.wsgi:application --bind 0.0.0.0:8000 --workers 4
+    command: gunicorn lifeshare.wsgi:application --bind 0.0.0.0:8000 --workers 4
     volumes:
       - .:/code
     ports:

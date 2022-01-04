@@ -165,7 +165,7 @@ class SendFormEmail(View):
         send_mail(
             'Subject - Donate Blood', 
             'Hello our super hero we need you for save life',
-            '21025560@student.ltuc.com', # Admin
+            'yahia_labib@hotmail.com', # Admin
             [
                 email
             ]
