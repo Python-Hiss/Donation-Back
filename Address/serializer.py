@@ -15,5 +15,13 @@ class AddCitySerializer(serializers.ModelSerializer):
 
 class AddAddressSerializer(serializers.ModelSerializer):
     class Meta:
+
+        model = Address
+        fields = ('id','city','area','direction')
+
+
+class viewAddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        depth = 2
         model = Address
         fields = ('id','city','area','direction')

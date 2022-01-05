@@ -108,6 +108,7 @@ class EditHospitalUser(serializers.ModelSerializer):
         return user
 
     class Meta:
+        # depth = 3
         model = Hospital
         # Tuple of serialized model fields (see link [2])
         fields = ( 'address',"first_name","username","website",'email','image','phone_number')
