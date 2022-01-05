@@ -37,14 +37,15 @@ class EditDonerSerializer(serializers.ModelSerializer):
             chronic_diseases = validated_data['chronic_diseases'],
             phone_number = validated_data['phone_number'],
             blood_type = validated_data['blood_type'],
+            address = validated_data['address'],
         )
 
         return user
 
     class Meta:
-        depth = 2
+        # depth = 2
         model = Doner
-        fields = ('username','first_name','email','chronic_diseases','image','phone_number','blood_type'
+        fields = ('username','first_name','email','chronic_diseases','image','phone_number','blood_type', 'address'
         )
         
 
@@ -147,6 +148,7 @@ class EditPatientSerializer(serializers.ModelSerializer):
             reason = validated_data['reason'],
             blood_type = validated_data['blood_type'],
             phone_number = validated_data['phone_number'],
+            address = validated_data['address'],
         )
 
         return user
@@ -154,7 +156,7 @@ class EditPatientSerializer(serializers.ModelSerializer):
     class Meta:
         depth = 2
         model = Patient
-        fields = ('username','first_name','email','reason','image', 'blood_type','phone_number'
+        fields = ('username','first_name','email','reason','image', 'blood_type','phone_number', 'address'
         )
 
 
