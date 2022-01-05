@@ -161,10 +161,12 @@ class SendFormEmail(View):
         body_unicode = request.body
     #    dataGet = request.GET.get('name',None)
         email = json.loads(body_unicode)['email']
+        name = json.loads(body_unicode)['name']
+        website = json.loads(body_unicode)['website']
         print(email)
         send_mail(
-            'Subject - Donate Blood', 
-            'Hello our super hero we need you for save life',
+            'Life Share -  Donate Blood', 
+            f"Hello our super hero we need you to save someone's life in {name} hospital this is our website {website}",
             'yahia_labib@hotmail.com', # Admin
             [
                 email
