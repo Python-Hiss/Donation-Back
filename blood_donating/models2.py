@@ -4,9 +4,10 @@ class Post(models.Model):
     patient = models.ForeignKey(CustomUser,to_field='username',on_delete=models.CASCADE)
     title = models.CharField(max_length=256)
     text = models.TextField()
-    # blood_type = models.CharField(max_length=10)
+    phone = models.CharField(max_length=20)
+    city = models.CharField(max_length=20)
     time = models.DateTimeField(auto_now_add=True, blank=True)
-    publish = models.BooleanField()
+    
     
     def __str__(self) :
         return f"{self.patient} {self.title}"
