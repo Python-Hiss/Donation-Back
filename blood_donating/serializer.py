@@ -6,7 +6,7 @@ from rest_framework import serializers
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ["id",'patient', 'title',"time","text","publish"]
+        fields = ('__all__')
 
 class BloodSerilaizer(serializers.ModelSerializer):
     class Meta:
